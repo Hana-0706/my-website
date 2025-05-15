@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head> 
+ <meta charset="UTF-8" /> 
+ <title>人気ランキング</title> 
+ <link rel="stylesheet" href="rank.css" />
+</head>
+<body> 
+  <main class="rank-page"> 
+    <h1>人気ランキング</h1> 
+    <section class="rank-list"> 
+     <div class="rank-card"> 
+        <div class="rank-badge">1位</div> 
+        <img src="shoes_sneaker.png" alt="厚底スニーカー" />
+        <h2>厚底スニーカー</h2> 
+        <p class="price">¥6,500</p> 
+        <button onclick="addToCart('厚底スニーカー', 6500)">カートに追加</button>
+      </div>
+
+     <div class="rank-card">
+        <div class="rank-badge">2位</div>
+        <img src="shoes_sneaker.png" alt="スニーカー" />
+        <h2>スニーカー</h2>
+        <p class="price">¥5,500</p>
+        <button onclick="addToCart('スニーカー', 5500)">カートに追加</button>
+      </div>
+    
+     <div class="rank-card">
+        <div class="rank-badge">3位</div>
+        <img src="fashion_tshirt1_white.png" alt="ホワイトTシャツ" />
+        <h2>ホワイトTシャツ</h2>
+        <p class="price">¥3,000</p>
+        <button onclick="addToCart('ホワイトTシャツ', 3000)">カートに追加</button>
+      </div>
+    </section>
+    <a href="cart.html" class="back-link">🛒 カートを見る</a>
+</main>
+
+<script>
+    function addToCart(name, price) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const existing = cart.find(item => item.name === name);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${name} をカートに追加しました！`);
+    }
+
+    const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
+    const currentPage = location.pathname.split("/").pop(); // 例: "index.html"
+
+    if (pathHistory[pathHistory.length - 1] !== currentPage) {
+        pathHistory.push(currentPage);
+        localStorage.setItem("pageHistory", JSON.stringify(pathHistory));
+    }
+  </script>
+
+<script>
+    window.onload = function() {
+      const apiURL = "https://script.google.com/macros/s/AKfycbygshnWLwiuhY6ScjxU_IdS0K7l-5OGQ5kWsY_eYsyLRaXyUCimmA79S2ykwXsrdR-f/exec";
+      const pageName = "rank.html";
+  
+      fetch(`${apiURL}?page=${encodeURIComponent(pageName)}`)
+        .then(response => response.text())
+        .then(data => console.log("記録成功:", data))
+        .catch(err => console.error("エラー:", err));
+    };
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,102 @@
+body {
+    font-family: "Helvetica Neue", sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  
+  .rank-page {
+    max-width: 960px;
+    margin: 2em auto;
+    padding: 1em;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 1.5em;
+  }
+  
+  .rank-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .rank-card {
+    width: 30%;
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1em;
+    text-align: center;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .rank-card:hover {
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  }
+  
+  .rank-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .rank-badge {
+    background-color: #e84a5f;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    font-size: 18px;
+    color: #e84a5f;
+    font-weight: bold;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: #555;
+    margin-top: 0.5em;
+  }
+  
+  button {
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    background-color: #e84a5f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  button:hover {
+    background-color: #d33c50;
+  }
+  
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 2em;
+    color: #666;
+    text-decoration: none;
+  }
+  
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  

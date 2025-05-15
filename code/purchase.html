@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>購入確認ページ</title>
+    <link rel="stylesheet" href="purchase.css" />
+</head>
+<body>
+    <h1>購入内容の確認</h1>
+    <div id="cart-items" class="cart-box"></div>
+    <p id="cart-total" class="total-text"></p>
+    <button class="buy-button" onclick="completePurchase()">✅ この内容で購入する</button>
+
+    <script>
+        if (!localStorage.getItem("entryTime")) {
+            localStorage.setItem("entryTime", new Date().toISOString());
+        }
+
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const cartItemsDiv = document.getElementById("cart-items");
+        const cartTotalP = document.getElementById("cart-total");
+        let total = 0;
+
+        cart.forEach(item => {
+            const div = document.createElement("div");
+            div.textContent = `${item.name} × ${item.quantity}（¥${item.price * item.quantity}）`;
+            cartItemsDiv.appendChild(div);
+            total += item.price * item.quantity;
+        });
+
+        cartTotalP.textContent = `合計金額: ¥${total.toLocaleString()}`;
+
+        
+        function completePurchase() {
+            const entryTime = new Date(localStorage.getItem("entryTime"));
+            const leaveTime = new Date();
+            const stayMinutes = Math.round((leaveTime - entryTime) / 1000 / 60);
+            
+            const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            const itemsSummary = cart.map(item => `${item.name}x${item.quantity}`).join(", ");
+            const userName = localStorage.getItem("userName") || "未入力";
+
+            const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
+            const pathText = pathHistory.join(" → ");
+
+            const gasUrl = "https://script.google.com/macros/s/AKfycbxyjx1BL0foZXa39k24UvvO8BJsQBkVz670_w5gb578Orh1xlwkO6gv_ZpxVRMIopiW/exec";
+
+            const params = new URLSearchParams({
+            action: "purchase",
+            stay: stayMinutes,
+            total: total,
+            items: itemsSummary,
+            name: userName,
+            history: pathText
+            });
+
+            fetch(`${gasUrl}?${params.toString()}`)
+                .then(response =>{
+                    alert("購入が記録されました！ありがとうございました。");
+                    localStorage.clear(); 
+                    location.href = "login.html";
+                })
+                .catch(error =>{
+                    alert("送信に失敗しました")
+                    console.error(error);
+                });
+        }
+
+        const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
+        const currentPage = location.pathname.split("/").pop(); // 例: "index.html"
+
+        if (pathHistory[pathHistory.length - 1] !== currentPage) {
+            pathHistory.push(currentPage);
+            localStorage.setItem("pageHistory", JSON.stringify(pathHistory));
+        }
+    </script>
+</body>
+</html>
