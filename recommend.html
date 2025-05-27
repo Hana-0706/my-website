@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>おすすめコーディネート</title>
+  <link rel="stylesheet" href="recommend.css">
+</head>
+<body>
+  <main class="recommend-page">
+    <h1>おすすめコーディネート</h1>
+    <section class="recommend-list">
+      <div class="recommend-card">
+        <img src="cloth_skirt.png" alt="スカート">
+        <h2>フレアスカート</h2>
+        <p class="price">¥3,500</p>
+        <button onclick="addToCart('フレアスカート', 3500)">カートに追加</button>
+      </div>
+      <div class="recommend-card">
+        <img src="fashion_jeans.png" alt="ジーンズ">
+        <h2>ストレートデニム</h2>
+        <p class="price">¥5,500</p>
+        <button onclick="addToCart('ストレートデニム', 5500)">カートに追加</button>
+      </div>
+    </section>
+    <a href="cart.html" class="back-link">🛒 カートを見る</a>
+  </main>
+
+  <script>
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ name, price, quantity: 1 });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert(`${name} をカートに追加しました！`);
+    }
+
+    const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
+    const currentPage = location.pathname.split("/").pop(); // 例: "index.html"
+
+    if (pathHistory[pathHistory.length - 1] !== currentPage) {
+        pathHistory.push(currentPage);
+        localStorage.setItem("pageHistory", JSON.stringify(pathHistory));
+    }
+  </script>
+
+<script>
+    window.onload = function() {
+      const apiURL = "https://script.google.com/macros/s/AKfycbygshnWLwiuhY6ScjxU_IdS0K7l-5OGQ5kWsY_eYsyLRaXyUCimmA79S2ykwXsrdR-f/exec";
+      const pageName = "recommend.html";
+  
+      fetch(`${apiURL}?page=${encodeURIComponent(pageName)}`)
+        .then(response => response.text())
+        .then(data => console.log("記録成功:", data))
+        .catch(err => console.error("エラー:", err));
+    };
+  </script>
+  
+</body>
+</html>
