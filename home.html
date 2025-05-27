@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+     <title>ファッションサイト</title>
+     <link rel="stylesheet" href="style.css" />
+</head>
+  
+<body>      
+
+ <header>
+    <h1>My　fashion</h1>
+    <a href="cart.html" class="cart-link">
+      🛒 カート <span id="cart-count">0</span>
+    </a> 
+
+    <script>
+      function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        document.getElementById("cart-count").textContent = cart.length;
+      }
+      window.addEventListener("DOMContentLoaded", updateCartCount);
+    </script>
+
+  </header>
+</body>
+          
+<!--  メイン商品：Tシャツ -->
+<section class="main-product">
+  <h2>Pick Up!</h2>
+  <img src="fashion_tshirt1_white.png" alt="白Tシャツ" />
+  <p>ホワイトTシャツ - ¥2,000</p>
+  <p class="catch-copy">シンプルで合わせやすいTシャツ！</p>
+  <button onclick="addToCartAndGo()">カートに追加</button>
+</section>
+
+<script>
+  function addToCartAndGo() {
+    const item = {
+      name: "ホワイトTシャツ",
+      price: 2000,
+      quantity: 1
+    };
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    cart.push(item);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert(`${item.name} をカートに追加しました！`);
+    location.reload();
+  }
+
+    const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
+    const currentPage = location.pathname.split("/").pop(); // 例: "index.html"
+
+    if (pathHistory[pathHistory.length - 1] !== currentPage) {
+        pathHistory.push(currentPage);
+        localStorage.setItem("pageHistory", JSON.stringify(pathHistory));
+  }
+</script>
+                  
+<!--  おすすめコーディネート -->
+<section class="recommend-section">
+ <h2>おすすめのコーディネート</h2>
+ <div class="recommend-container">
+  <div class="product-card" onclick="location.href='recommend.html'">
+   <img src="cloth_skirt.png" alt="スカート" />
+   <p>フレアスカート</p>
+   <p>¥3,500</p>
+  </div>
+  <div class="product-card" onclick="location.href='recommend.html'">
+    <img src="fashion_jeans.png" alt="ジーンズ" />
+    <p>ストレートデニム</p>
+    <p>¥5,500</p>
+   </div>
+  </div>
+</section>
+                              
+<!--  ランキング -->
+<section class="recommend-section">
+  <h2>ランキングで人気のアイテム</h2>
+  <div class="recommend-container">
+   <div class="product-card" onclick="location.href='rank.html'">
+    <div class="rank-badge">1位</div>       
+    <img src="shoes_sneaker.png" alt="厚底スニーカー" />
+    <p>厚底スニーカー</p>
+    <p>¥6,500</p>
+   </div>
+                                        
+   <div class="product-card" onclick="location.href='rank.html'">
+    <div class="rank-badge">2位</div>
+    <img src="shoes_sneaker.png" alt="スニーカー" />
+    <p>スニーカー</p>
+    <p>¥5,500</p>
+  </div>
+                                              
+  <div class="product-card" onclick="location.href='rank.html'">
+   <div class="rank-badge">3位</div>
+   <img src="fashion_tshirt1_white.png" alt="Tシャツ" />
+   <p>ホワイトTシャツ</p>
+   <p>¥3,000</p>
+  </div>
+                                                    
+</div>
+</section>
+                                                    
+                                                    
+
+<footer>
+ <p>&copy; 2025 My Fashion</p>
+</footer>
+                                                    
+                    
+</body>
+</html>
+                                                    
