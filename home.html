@@ -51,13 +51,7 @@
     location.reload();
   }
 
-    const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
-    const currentPage = location.pathname.split("/").pop(); // 例: "index.html"
-
-    if (pathHistory[pathHistory.length - 1] !== currentPage) {
-        pathHistory.push(currentPage);
-        localStorage.setItem("pageHistory", JSON.stringify(pathHistory));
-  }
+    
 </script>
                   
 <!--  おすすめコーディネート -->
@@ -110,8 +104,10 @@
 <footer>
  <p>&copy; 2025 My Fashion</p>
 </footer>
-                                                    
-                    
+
+<script src="track.js"></script>
+
+
 </body>
 </html>
                                                     
