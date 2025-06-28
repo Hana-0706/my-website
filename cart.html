@@ -32,33 +32,48 @@
     const container = document.getElementById("cart-items");
     const totalEl = document.getElementById("cart-total");
 
-    function renderCart() {
-      container.innerHTML = "";
-      let total = 0;
+    function updateQuantity(index, change) {
+  cart[index].quantity += change;
+  if (cart[index].quantity < 1) {
+    cart[index].quantity = 1; // 最小1個
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
 
-      if (cart.length === 0) {
-        container.innerHTML = "<p>カートは空です。</p>";
-        totalEl.textContent = "合計: ¥0";
-        return;
-      }
+function renderCart() {
+  container.innerHTML = "";
+  let total = 0;
 
-      cart.forEach((item, index) => {
-        total += item.price * item.quantity;
+  if (cart.length === 0) {
+    container.innerHTML = "<p>カートは空です。</p>";
+    totalEl.textContent = "合計: ¥0";
+    return;
+  }
 
-        const div = document.createElement("div");
-        div.className = "cart-item";
-        div.innerHTML = `
-          <div class="item-info">
-            <p><strong>${item.name}</strong></p>
-            <p>¥${item.price} × ${item.quantity}</p>
-          </div>
-          <button class="delete-btn" onclick="removeItem(${index})">削除</button>
-        `;
-        container.appendChild(div);
-      });
+  cart.forEach((item, index) => {
+    total += item.price * item.quantity;
 
-      totalEl.textContent = "合計: ¥" + total.toLocaleString();
-    }
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <div class="item-info">
+        <p><strong>${item.name}</strong></p>
+        <p>
+          ¥${item.price} × 
+          <button onclick="updateQuantity(${index}, -1)">－</button>
+          ${item.quantity}
+          <button onclick="updateQuantity(${index}, 1)">＋</button>
+        </p>
+      </div>
+      <button class="delete-btn" onclick="removeItem(${index})">削除</button>
+    `;
+    container.appendChild(div);
+  });
+
+  totalEl.textContent = "合計: ¥" + total.toLocaleString();
+}
+
 
     function removeItem(index) {
       cart.splice(index, 1);
