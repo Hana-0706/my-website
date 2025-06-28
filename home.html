@@ -54,9 +54,9 @@
   <div class="recommend-container">
     <div class="product-card" onclick="location.href='rank.html'">
       <div class="rank-badge">1位</div>       
-      <img src="code/shoes_sneaker.png" alt="厚底スニーカー" />
-      <p>厚底スニーカー</p>
-      <p>¥6,500</p>
+      <img src="code/fashion_jeans.png" alt="ジーンズ" />
+      <p>ストレートデニム</p>
+      <p>¥5,500</p>
     </div>
     <div class="product-card" onclick="location.href='rank.html'">
       <div class="rank-badge">2位</div>
@@ -106,6 +106,19 @@
     addToCart(item);
     location.href = "cart.html";
   }
+
+  function addDenimToCartAndGo() {
+  const item = {
+    id: 2,
+    name: "ストレートデニム",
+    price: 5500,
+    quantity: 1
+  };
+
+  addToCart(item);
+  location.href = "cart.html";
+}
+
 </script>
 
 <script src="track.js"></script>
