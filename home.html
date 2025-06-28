@@ -2,30 +2,27 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-     <title>ファッションサイト</title>
-     <link rel="stylesheet" href="code/style.css" />
+  <title>ファッションサイト</title>
+  <link rel="stylesheet" href="code/style.css" />
 </head>
-  
 <body>      
 
- <header>
-    <h1>My　fashion</h1>
-    <a href="cart.html" class="cart-link">
-      🛒 カート <span id="cart-count">0</span>
-    </a> 
+<header>
+  <h1>My Fashion</h1>
+  <a href="cart.html" class="cart-link">
+    🛒 カート <span id="cart-count">0</span>
+  </a> 
+  <script>
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById("cart-count").textContent = totalCount;
+    }
+    window.addEventListener("DOMContentLoaded", updateCartCount);
+  </script>
+</header>
 
-    <script>
-      function updateCartCount() {
-        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-        document.getElementById("cart-count").textContent = cart.length;
-      }
-      window.addEventListener("DOMContentLoaded", updateCartCount);
-    </script>
-
-  </header>
-</body>
-          
-<!--  メイン商品：Tシャツ -->
+<!-- メイン商品 -->
 <section class="main-product">
   <h2>Pick Up!</h2>
   <img src="code/fashion_tshirt1_white.png" alt="白Tシャツ" />
@@ -34,80 +31,84 @@
   <button onclick="addToCartAndGo()">カートに追加</button>
 </section>
 
+<!-- コーディネート -->
+<section class="recommend-section">
+  <h2>おすすめのコーディネート</h2>
+  <div class="recommend-container">
+    <div class="product-card" onclick="location.href='recommend.html'">
+      <img src="code/cloth_skirt.png" alt="スカート" />
+      <p>フレアスカート</p>
+      <p>¥3,500</p>
+    </div>
+    <div class="product-card" onclick="location.href='recommend.html'">
+      <img src="code/fashion_jeans.png" alt="ジーンズ" />
+      <p>ストレートデニム</p>
+      <p>¥5,500</p>
+    </div>
+  </div>
+</section>
+
+<!-- ランキング -->
+<section class="recommend-section">
+  <h2>ランキングで人気のアイテム</h2>
+  <div class="recommend-container">
+    <div class="product-card" onclick="location.href='rank.html'">
+      <div class="rank-badge">1位</div>       
+      <img src="code/shoes_sneaker.png" alt="厚底スニーカー" />
+      <p>厚底スニーカー</p>
+      <p>¥6,500</p>
+    </div>
+    <div class="product-card" onclick="location.href='rank.html'">
+      <div class="rank-badge">2位</div>
+      <img src="code/shoes_sneaker.png" alt="スニーカー" />
+      <p>スニーカー</p>
+      <p>¥5,500</p>
+    </div>
+    <div class="product-card">
+      <div class="rank-badge">3位</div>
+      <img src="code/fashion_tshirt1_white.png" alt="Tシャツ" />
+      <p>ホワイトTシャツ</p>
+      <p>¥2,000</p>
+      <button onclick="addToCart({ id: 1, name: 'ホワイトTシャツ', price: 2000, quantity: 1 })">カートに追加</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 My Fashion</p>
+</footer>
+
+
 <script>
+  function addToCart(item) {
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const existingItem = cart.find(product => product.id === item.id);
+
+    if (existingItem) {
+      existingItem.quantity += item.quantity;
+    } else {
+      cart.push(item);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${item.name} をカートに追加しました！`);
+    updateCartCount(); // 数を更新
+  }
+
   function addToCartAndGo() {
     const item = {
+      id: 1,
       name: "ホワイトTシャツ",
       price: 2000,
       quantity: 1
     };
 
-    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-    cart.push(item);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    alert(`${item.name} をカートに追加しました！`);
-    location.reload();
+    addToCart(item);
+    location.href = "cart.html";
   }
-
-    
 </script>
-                  
-<!--  おすすめコーディネート -->
-<section class="recommend-section">
- <h2>おすすめのコーディネート</h2>
- <div class="recommend-container">
-  <div class="product-card" onclick="location.href='recommend.html'">
-   <img src="code/cloth_skirt.png" alt="スカート" />
-   <p>フレアスカート</p>
-   <p>¥3,500</p>
-  </div>
-  <div class="product-card" onclick="location.href='recommend.html'">
-    <img src="code/fashion_jeans.png" alt="ジーンズ" />
-    <p>ストレートデニム</p>
-    <p>¥5,500</p>
-   </div>
-  </div>
-</section>
-                              
-<!--  ランキング -->
-<section class="recommend-section">
-  <h2>ランキングで人気のアイテム</h2>
-  <div class="recommend-container">
-   <div class="product-card" onclick="location.href='rank.html'">
-    <div class="rank-badge">1位</div>       
-    <img src="code/shoes_sneaker.png" alt="厚底スニーカー" />
-    <p>厚底スニーカー</p>
-    <p>¥6,500</p>
-   </div>
-                                        
-   <div class="product-card" onclick="location.href='rank.html'">
-    <div class="rank-badge">2位</div>
-    <img src="code/shoes_sneaker.png" alt="スニーカー" />
-    <p>スニーカー</p>
-    <p>¥5,500</p>
-  </div>
-                                              
-  <div class="product-card" onclick="location.href='rank.html'">
-   <div class="rank-badge">3位</div>
-   <img src="code/fashion_tshirt1_white.png" alt="Tシャツ" />
-   <p>ホワイトTシャツ</p>
-   <p>¥2,000</p>
-  </div>
-                                                    
-</div>
-</section>
-                                                    
-                                                    
-
-<footer>
- <p>&copy; 2025 My Fashion</p>
-</footer>
 
 <script src="track.js"></script>
-
-
 </body>
 </html>
-                                                    
