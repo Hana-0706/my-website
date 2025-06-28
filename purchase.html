@@ -50,16 +50,15 @@
       if (isSending) return;
       isSending = true;
 
-      const btn = document.querySelector('.buy-button');
+    const btn = document.querySelector('.buy-button');
       btn.disabled = true;
 
+    const userName = localStorage.getItem("userName");
 
-const userName = localStorage.getItem("userName");
-
-if (!userName || userName.trim() === "") {
-  alert("名前が入力されていません。ログイン画面に戻ります。");
-  location.href = "index.html";
-  return;
+    if (!userName || userName.trim() === "") {
+    alert("名前が入力されていません。ログイン画面に戻ります。");
+    location.href = "index.html";
+    return;
 }
 
             const entryTime = new Date(localStorage.getItem("entryTime"));
@@ -69,7 +68,7 @@ if (!userName || userName.trim() === "") {
             const cart = JSON.parse(localStorage.getItem("cart") || "[]");
             const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
             const itemsSummary = cart.map(item => `${item.name}x${item.quantity}`).join(", ");
-            const userName = localStorage.getItem("userName") || "未入力";
+           
 
             const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
             const pathText = pathHistory.join(" → ");
