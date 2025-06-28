@@ -22,6 +22,14 @@
     <p id="cart-total" class="total-text"></p>
     <button class="buy-button" onclick="completePurchase()">✅ この内容で購入する</button>
 
+<script>
+function handleClick(btn) {
+  btn.disabled = true; // ボタン無効化
+  // フォーム送信処理（例: フォームsubmit()を呼ぶなど）
+}
+</script>
+
+
     <script>
         if (!localStorage.getItem("entryTime")) {
             localStorage.setItem("entryTime", new Date().toISOString());
