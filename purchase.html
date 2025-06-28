@@ -28,15 +28,6 @@
             localStorage.setItem("entryTime", new Date().toISOString());
         }
 
-let isSending = false; // 送信中フラグ
-
-function completePurchase() {
-  if (isSending) return; // 送信中なら何もしない
-  isSending = true;      // 送信開始フラグを立てる
-
-  const btn = document.querySelector('.buy-button');
-  btn.disabled = true;   // ボタンを無効化して連打防止
-        
         const cart = JSON.parse(localStorage.getItem("cart") || "[]");
         const cartItemsDiv = document.getElementById("cart-items");
         const cartTotalP = document.getElementById("cart-total");
@@ -91,6 +82,21 @@ function completePurchase() {
     </script>
     
 <script src="track.js"></script>
+
+    <script>
+let isSending = false; // 送信中フラグ
+
+function completePurchase() {
+  if (isSending) return; // 送信中なら処理しない
+  isSending = true;
+
+  const btn = document.querySelector('.buy-button');
+  btn.disabled = true;  // 連打防止でボタン無効化
+
+  // ここに購入処理（fetch送信など）を書く
+}
+</script>
+
 
 </body>
 </html>
