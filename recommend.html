@@ -36,20 +36,21 @@
   </main>
 
   <script>
-    function addToCart(name, price) {
-      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+   function addToCart(newItem) {
+  let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-      const existing = cart.find(item => item.name === name);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ name, price, quantity: 1 });
-      }
+  const existing = cart.find(item => item.id === newItem.id);
 
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert(`${name} をカートに追加しました！`);
-    }
-    
+  if (existing) {
+    existing.quantity += newItem.quantity;
+  } else {
+    cart.push(newItem);
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert(`${newItem.name} をカートに追加しました！`);
+}
+
   </script>
 
 <script>
