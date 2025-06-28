@@ -42,8 +42,18 @@
 
         cartTotalP.textContent = `合計金額: ¥${total.toLocaleString()}`;
 
+        // 送信中フラグ
+    let isSending = false;
+
+    // 購入処理
+    function completePurchase() {
+      if (isSending) return;
+      isSending = true;
+
+      const btn = document.querySelector('.buy-button');
+      btn.disabled = true;
+
         
-        function completePurchase() {
             const entryTime = new Date(localStorage.getItem("entryTime"));
             const leaveTime = new Date();
             const stayMinutes = Math.round((leaveTime - entryTime) / 1000 / 60);
@@ -81,20 +91,7 @@
 
     </script>
 
-  <script>
-let isSending = false; // 送信中フラグ
 
-function completePurchase() {
-  if (isSending) return; // 送信中なら処理しない
-  isSending = true;
-
-  const btn = document.querySelector('.buy-button');
-  btn.disabled = true;  // 連打防止でボタン無効化
-
-  // ここに購入処理（fetch送信など）を書く
-}
-　　</script>
-    
 <script src="track.js"></script>
 
 
