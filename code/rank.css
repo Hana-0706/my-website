@@ -73,7 +73,7 @@ body {
     margin-top: 0.5em;
   }
   
-  button {
+ .rank-card button {
     margin-top: 1em;
     padding: 0.5em 1em;
     background-color: #f78ca2;
@@ -84,7 +84,7 @@ body {
     font-size: 14px;
   }
   
-  button:hover {
+.rank-card  button:hover {
     background-color: #f35a7a;
   }
   
