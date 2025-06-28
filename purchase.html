@@ -53,7 +53,15 @@
       const btn = document.querySelector('.buy-button');
       btn.disabled = true;
 
-        
+
+const userName = localStorage.getItem("userName");
+
+if (!userName || userName.trim() === "") {
+  alert("名前が入力されていません。ログイン画面に戻ります。");
+  location.href = "index.html";
+  return;
+}
+
             const entryTime = new Date(localStorage.getItem("entryTime"));
             const leaveTime = new Date();
             const stayMinutes = Math.round((leaveTime - entryTime) / 1000 / 60);
