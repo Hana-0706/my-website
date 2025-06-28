@@ -39,6 +39,22 @@ body {
     padding: 1em;
     transition: box-shadow 0.3s ease;
   }
+
+.recommend-card button {
+  background-color: #f78ca2; 
+  color: #fff;              
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.recommend-card button:hover {
+  background-color: #f35a7a; /* 少し濃いピンクに */
+}
+
   
   .recommend-card:hover {
     box-shadow: 0 6px 12px rgba(0,0,0,0.1);
