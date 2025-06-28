@@ -28,6 +28,15 @@
             localStorage.setItem("entryTime", new Date().toISOString());
         }
 
+let isSending = false; // 送信中フラグ
+
+function completePurchase() {
+  if (isSending) return; // 送信中なら何もしない
+  isSending = true;      // 送信開始フラグを立てる
+
+  const btn = document.querySelector('.buy-button');
+  btn.disabled = true;   // ボタンを無効化して連打防止
+        
         const cart = JSON.parse(localStorage.getItem("cart") || "[]");
         const cartItemsDiv = document.getElementById("cart-items");
         const cartTotalP = document.getElementById("cart-total");
@@ -41,10 +50,6 @@
         });
 
         cartTotalP.textContent = `合計金額: ¥${total.toLocaleString()}`;
-
-    function completePurchase() {
-    const btn = document.querySelector('.buy-button');
-    btn.disabled = true;
 
         
         function completePurchase() {
