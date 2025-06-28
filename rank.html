@@ -31,8 +31,9 @@
         <img src="code/fashion_tshirt1_white.png" alt="ホワイトTシャツ" />
         <h2>ホワイトTシャツ</h2>
         <p class="price">¥2,000</p>
-        <button onclick="addToCart({ id: 1, name: 'ホワイトTシャツ', price: 2000, quantity: 1 })">カートに追加
-　　　　</button>
+        <button onclick="addToCart({ id: 1, name: 'ホワイトTシャツ', price: 2000, quantity: 1 })">
+    カートに追加
+  </button>
 
       </div>
     </section>
@@ -56,22 +57,21 @@
 </main>
 
 <script>
-    function addToCart(name, price) {
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-      const existing = cart.find(item => item.name === name);
+  function addToCart(newItem) {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ name, price, quantity: 1 });
-      }
+    const existing = cart.find(item => item.id === newItem.id);
 
-      localStorage.setItem("cart", JSON.stringify(cart));
-      alert(`${name} をカートに追加しました！`);
+    if (existing) {
+      existing.quantity += newItem.quantity;
+    } else {
+      cart.push(newItem);
     }
 
-
-  </script>
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert(`${newItem.name} をカートに追加しました！`);
+  }
+</script>
 
 <script>
     window.onload = function() {
