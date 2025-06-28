@@ -86,7 +86,6 @@ section.main-product button > button {
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease;
 }
 
 section.main-product > button:hover {
