@@ -8,6 +8,9 @@
 <body> 
   <main class="rank-page"> 
     <h1>人気ランキング</h1> 
+    <a href="cart.html" class="cart-link">
+    🛒 カート <span id="cart-count">0</span>
+    </a> 
 
     <section class="rank-list"> 
      <div class="rank-card"> 
@@ -83,6 +86,27 @@
         .catch(err => console.error("エラー:", err));
     };
   </script>
+
+ <script>
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    const cartCountElem = document.getElementById("cart-count");
+    if (cartCountElem) {
+      cartCountElem.textContent = totalCount;
+    }
+  }
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === "cart") {
+      updateCartCount();
+    }
+  });
+
+  window.addEventListener("DOMContentLoaded", updateCartCount);
+</script>
+
 
 <script src="track.js"></script>
 
