@@ -122,6 +122,13 @@
   </script>
 
   <script>
+  if (!localStorage.getItem("entryTime")) {
+    localStorage.setItem("entryTime", new Date().toISOString());
+  }
+</script>
+
+
+  <script>
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -140,7 +147,6 @@
 
   window.addEventListener("DOMContentLoaded", updateCartCount);
 </script>
-
 
 
 <script src="track.js"></script>
