@@ -9,7 +9,7 @@
 <body>
     <h1>購入内容の確認</h1>
 
-    <button onclick="history.back()" style="
+ <button onclick="history.back()" style="
   margin: 20px;
   padding: 10px 16px;
   background-color: #f0f0f0;
@@ -20,10 +20,14 @@
 
     <div id="cart-items" class="cart-box"></div>
     <p id="cart-total" class="total-text"></p>
-    <button class="buy-button" onclick="completePurchase()">✅ この内容で購入する</button>
+    <button class="purchase-button" onclick="completePurchase()">✅ この内容で購入する</button>
 
 
     <script>
+
+        const group = sessionStorage.getItem("group") || "A";
+        console.log("Experiment group (purchase page):", group);
+
         if (!localStorage.getItem("entryTime")) {
             localStorage.setItem("entryTime", new Date().toISOString());
         }
@@ -35,14 +39,20 @@
 
         cart.forEach(item => {
             const div = document.createElement("div");
-            div.textContent = `${item.name} × ${item.quantity}（¥${item.price * item.quantity}）`;
-            cartItemsDiv.appendChild(div);
-            total += item.price * item.quantity;
-        });
+            div.className = "cart-item";
+            div.innerHTML = `
+             <div class="item-info">
+               <strong>${item.name}</strong> × ${item.quantity}
+               <span>（¥${item.price * item.quantity}）</span>
+             </div>
+      `;
+      cartItemsDiv.appendChild(div);
+      total += item.price * item.quantity;
+    });
 
         cartTotalP.textContent = `合計金額: ¥${total.toLocaleString()}`;
 
-        // 送信中フラグ
+    // 送信中フラグ
     let isSending = false;
 
     // 購入処理
@@ -52,24 +62,24 @@
 
     const btn = document.querySelector('.buy-button');
       btn.disabled = true;
+      btn.textContent = "処理中…";
 
     const userName = localStorage.getItem("userName");
-
+        
     if (!userName || userName.trim() === "") {
     alert("名前が入力されていません。ログイン画面に戻ります。");
+    btn.disabled = false;
+    btn.textContent = "✅ この内容で購入する";
+    isSending = false;
     location.href = "index.html";
     return;
-}
+  }
 
             const entryTime = new Date(localStorage.getItem("entryTime"));
             const leaveTime = new Date();
             const stayMinutes = Math.round((leaveTime - entryTime) / 1000 / 60);
             
-            const cart = JSON.parse(localStorage.getItem("cart") || "[]");
-            const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
             const itemsSummary = cart.map(item => `${item.name}x${item.quantity}`).join(", ");
-           
-
             const pathHistory = JSON.parse(localStorage.getItem("pageHistory") || "[]");
             const pathText = pathHistory.join(" → ");
 
@@ -81,20 +91,26 @@
             total: total,
             items: itemsSummary,
             name: userName,
+            group: group,
             history: pathText
             });
 
             fetch(`${gasUrl}?${params.toString()}`)
-                .then(response =>{
-                    alert("購入が記録されました！ありがとうございました。");
-                    localStorage.clear(); 
-                    location.href = "index.html";
-                })
-                .catch(error =>{
-                    alert("送信に失敗しました")
-                    console.error(error);
-                });
-        }
+                 .then(response => response.text())
+        .then(data => {
+          console.log("サーバー応答:", data);
+          alert("購入が記録されました！ありがとうございました。");
+          localStorage.clear();
+          location.href = "index.html";
+        })
+        .catch(error => {
+          alert("送信に失敗しました");
+          console.error("エラー:", error);
+          btn.disabled = false;
+          btn.textContent = "✅ この内容で購入する";
+          isSending = false;
+        });
+    }
 
     </script>
 
